@@ -33,6 +33,8 @@ module Venice
       @verification_url ||= ITUNES_DEVELOPMENT_RECEIPT_VERIFICATION_ENDPOINT
       @shared_secret = options[:shared_secret] if options[:shared_secret]
       @exclude_old_transactions = options[:exclude_old_transactions] if options[:exclude_old_transactions]
+      
+      puts "verification_url is #{@verification_url}"
 
       json = json_response_from_verifying_data(data, options)
       receipt_attributes = json['receipt'].dup if json['receipt']
@@ -95,6 +97,7 @@ module Venice
         raise TimeoutError
       end
 
+      puts "response is #{response.body}"
       begin
         JSON.parse(response.body)
       rescue JSON::ParserError
