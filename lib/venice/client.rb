@@ -37,6 +37,7 @@ module Venice
       puts "verification_url is #{@verification_url}"
 
       json = json_response_from_verifying_data(data, options)
+      puts "response raw json is #{json}"
       receipt_attributes = json['receipt'].dup if json['receipt']
       receipt_attributes['original_json_response'] = json if receipt_attributes
 
