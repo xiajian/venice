@@ -101,7 +101,7 @@ module Venice
       def verify(data, options = {})
         verify!(data, options)
       rescue VerificationError, Client::TimeoutError => e 
-        puts "e is #{e}"
+        logger.info "e is #{e}"
         
         false
       end
@@ -109,7 +109,7 @@ module Venice
       def verify!(data, options = {})
         # 这里需要添加一下配置环境
         enviroment = options.delete(:env)
-        client = enviroment &&  enviroment == 'dev' ? Client.development : Client.production
+        client = (enviroment && enviroment == 'dev') ? Client.development : Client.production
 
         retry_count = 0
         begin

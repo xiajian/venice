@@ -28,16 +28,20 @@ module Venice
     def initialize
       @verification_url = ENV['IAP_VERIFICATION_ENDPOINT']
     end
+    
+    def logger
+      Venice.logger
+    end
 
     def verify!(data, options = {})
       @verification_url ||= ITUNES_DEVELOPMENT_RECEIPT_VERIFICATION_ENDPOINT
       @shared_secret = options[:shared_secret] if options[:shared_secret]
       @exclude_old_transactions = options[:exclude_old_transactions] if options[:exclude_old_transactions]
       
-      puts "verification_url is #{@verification_url}"
+      logger.info "verification_url is #{@verification_url}"
 
       json = json_response_from_verifying_data(data, options)
-      puts "response raw json is #{json}"
+
       receipt_attributes = json['receipt'].dup if json['receipt']
       receipt_attributes['original_json_response'] = json if receipt_attributes
 
@@ -98,7 +102,7 @@ module Venice
         raise TimeoutError
       end
 
-      puts "response is #{response.body}"
+      logger.debug "response is #{response.body}"
       begin
         JSON.parse(response.body)
       rescue JSON::ParserError
