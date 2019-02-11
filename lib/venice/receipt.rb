@@ -96,12 +96,12 @@ module Venice
     def to_json
       to_hash.to_json
     end
-
+    
     class << self
       def verify(data, options = {})
         verify!(data, options)
       rescue VerificationError, Client::TimeoutError => e 
-        logger.info "e is #{e}"
+        Venice.logger.info "e is #{e}"
         
         false
       end

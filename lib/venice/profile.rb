@@ -10,7 +10,7 @@ module Venice
 
       cost_time = Time.now - start_time
 
-      Aliexpress.logger.info "Cost Time is: #{cost_time} s"
+      Venice.logger.info "Cost Time is: #{cost_time} s"
 
       result
     end
